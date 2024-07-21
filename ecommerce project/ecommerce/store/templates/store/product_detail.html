@@ -1,0 +1,82 @@
+{% extends 'store/main.html' %}
+{% load static  %}
+
+{% block content %}
+<style>
+
+.product-detail {
+    padding: 20px;
+    background-color: #ffffff; /* Light background color for better readability */
+    border: 2px solid #e0e0e0; /* Subtle light grey border for a clean look */
+    border-radius: 8px; /* Slightly rounded corners for a modern feel */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-top: 20px; /* Space from other elements */
+    margin-bottom: 20px; /* Space from other elements */
+}
+
+.product-detail img {
+    border-radius: 8px; /* Consistent rounded corners with the container */
+    max-width: 100%; /* Ensure the image fits within the container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.product-info h1 {
+    font-size: 2em; /* Responsive font size */
+    margin-bottom: 10px;
+    color: #333; /* Dark color for good contrast */
+}
+
+.product-info .price {
+    font-size: 1.5em; /* Larger font size for price */
+    color: #f57c00; /* Bright color for emphasis */
+    margin-bottom: 15px;
+}
+
+.product-info p {
+    font-size: 1em; /* Standard font size */
+    line-height: 1.6; /* Improved readability */
+    color: #555; /* Slightly lighter color for text */
+}
+
+.product-info .btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border: none; /* Remove default border */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for better click area */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+#backbtn {
+    background-color: #0056b3; /* Dark blue background */
+    
+}
+.product-info .btn-primary:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+}
+</style>
+<div class="container product-detail">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Product Image -->
+            <div class="product-image">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Product Details -->
+            <div class="product-info">
+                <h1>{{ product.name }}</h1>
+                <p class="price">$ {{ product.price }}</p>
+                <p>{{ product.description }}</p>
+                
+                <button data-product={{product.id}} data-action = "add" class="btn btn-primary add-btn update-cart ">Add to Cart</button>
+                <a href="{% url 'store' %}" id="backbtn" class="btn btn-primary" >Back to Store</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
