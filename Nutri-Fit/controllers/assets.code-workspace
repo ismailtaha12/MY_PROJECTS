@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "../assets"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../models"
+		},
+		{
+			"path": "../public"
+		},
+		{
+			"path": "../routes"
+		},
+		{
+			"path": "../views"
+		}
+	]
+}
