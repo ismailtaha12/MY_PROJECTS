@@ -1,9 +1,6 @@
 
 
 
-let nextUserId =6;
-let nextOrderId =5;
-let nextPlanId=3;
 
 
 
@@ -405,33 +402,55 @@ function isValidDuration(plan, duration) {
 
 
 
-function login() {
-
-    window.open('index.html', '_self');
-    event.preventDefault(); 
+function login(event) {
+    event.preventDefault();
     let username = document.getElementById('loginUsername').value;
     let password = document.getElementById('loginPassword').value;
 
-    document.getElementById('loginUsername').classList.add('error-input');
-    document.getElementById('loginPassword').classList.add('error-input');
-
-
-
-    const user = users.find(user => user.username === username && user.password === password);
-    console.log(user);
-    if (user && user.role == "Admin") {
-        document.getElementById('loginError').classList.add('hidden');
-        document.getElementById('loginUsername').classList.remove('error-input');
+    // Reset error states
+    document.getElementById('loginUsername').classList.remove('error-input');
     document.getElementById('loginPassword').classList.remove('error-input');
-    openHTMLFileAdmin();
-        renderTableClassOrders();
-        addRecentViewer(user);
-    } else if(user && user.role == "Client"){
-        openHTMLFileclient();
+    document.getElementById('loginError').classList.add('hidden');
 
-    } else {
+    if (!username || !password) {
+        document.getElementById('loginError').textContent = 'Please fill in all fields';
         document.getElementById('loginError').classList.remove('hidden');
+        document.getElementById('loginUsername').classList.add('error-input');
+        document.getElementById('loginPassword').classList.add('error-input');
+        return;
     }
+
+    fetch('/loginn', { // Ensure the route matches your backend endpoint
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Assuming the response contains user data
+            const user = data.user;
+            console.log(user);
+            if (user.role === "Admin") {
+                openHTMLFileAdmin(); // Define this function to handle admin redirection
+            } else if (user.role === "Client") {
+                openHTMLFileclient()// Define this function to handle client redirection
+            }
+        } else {
+            console.log(data);
+            document.getElementById('loginError').textContent = data.message || 'Login failed';
+            document.getElementById('loginError').classList.remove('hidden');
+            document.getElementById('loginUsername').classList.add('error-input');
+        document.getElementById('loginPassword').classList.add('error-input');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('loginError').textContent = 'An error occurred. Please try again.';
+        document.getElementById('loginError').classList.remove('hidden');
+    });
 }
 function openHTMLFileclient() {
     window.open('homepage.html', '_self');
@@ -447,8 +466,10 @@ function showContent() {
     document.querySelector('.Log-SignContainer').classList.add('hidden');
     document.querySelector('.container').classList.remove('hidden');
 }
+
+
 function signup() {
-    window.open('homepage.html', '_self');
+    
     event.preventDefault();
     let username = document.getElementById('signupUsername').value;
     let email = document.getElementById('signupEmail').value;
@@ -471,12 +492,7 @@ function signup() {
         return; // Prevent form submission
     }
    
-    const existingUser = users.find(user => user.email === email);
-    if (existingUser) {
-        document.getElementById('signupErrorEmail').textContent = ('Email already exists!');
-        document.getElementById('signupErrorEmail').classList.remove('hidden');
-        return;
-    }
+   
    if(!isEmailValid(email)){
     document.getElementById('signupErrorEmail').textContent = ('Please enter correct Email format');
     document.getElementById('signupErrorEmail').classList.remove('hidden');
@@ -494,7 +510,26 @@ function signup() {
         return;
     }
 
-
+    fetch('/AddUsers', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username : username, password :  password, email: email })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('User added successfully');
+        // Optionally handle success message display or UI updates
+        // Redirect after successful addition
+        window.location.href = "/homepage.html";
+    })
+    .catch(error => {
+        console.error('Error adding user:', error);
+        // Handle error scenario on the client side, if needed
+    });
 
 
     document.getElementById('signupEmail').value = '';
@@ -858,23 +893,24 @@ const container = document.getElementById('Log-SignContainer');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
 
-registerBtn.addEventListener('click', () => {
-    container.classList.add("active");
-});
+//registerBtn.addEventListener('click', () => {
+ //   container.classList.add("active");
+//});
 
-loginBtn.addEventListener('click', () => {
-    container.classList.remove("active");
-});
+//loginBtn.addEventListener('click', () => {
+ //   container.classList.remove("active");
+//});
 
-const sideMenu = document.querySelector("aside");
-const menuBtn  = document.querySelector("#menu-btn");
-const closebtn = document.querySelector(".close");
-menuBtn.addEventListener('click',() => {
-    sideMenu.style.display ='block';
-})
-closebtn.addEventListener('click', ()=>{
-    sideMenu.style.display ='none';
-})
+
+
+
+
+
+
+       
+
+    
+
 
 
 /*

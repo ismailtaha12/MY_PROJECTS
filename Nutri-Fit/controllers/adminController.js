@@ -2,6 +2,7 @@
 const Order = require("../models/mydataschema");
 const User = require("../models/users")
 const Plan = require("../models/plans")
+const bcrypt = require('bcryptjs');
 
 exports.renderUser = async (req, res) => {
 
@@ -109,11 +110,10 @@ exports.renderUser = async (req, res) => {
         return res.status(400).redirect("AddUsers");
       }
   
-      // Hash the password before saving
-      //const hashedPassword = await bcrypt.hash(password, 10);
-  
-      // Create a new user instance
-      const user = new User({ username: username, password: password, email: email, role:role });
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+
+      const user = new User({ username: username, password: hashedPassword, email: email, role:role });
       await user.save();
       console.log('User created successfully');
   

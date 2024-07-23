@@ -336,11 +336,11 @@ clip-path: circle(0% at 0 50%);
   
   /* Add background images for session cards */
   .session__card:nth-child(1) {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("session-1.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/session-1.jpg");
   }
   
   .session__card:nth-child(2) {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("session-2.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/session-2.jpg");
   }
   
   .session__card h4 {
@@ -380,7 +380,7 @@ clip-path: circle(0% at 0 50%);
 
   .membership {
     position: relative; /* Ensure relative positioning for absolute children */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("membership.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/membership.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

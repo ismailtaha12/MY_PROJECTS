@@ -92,7 +92,12 @@
                         </div>
 
                         <% if (message) { %>
-                            <h1 class="<%= success ? 'success-messagee' : 'error-messagee' %>"><%= message %></h1>
+                            <div id="messageContainer" class="<%= success ? 'success-messagee' : 'error-messagee' %>">
+                                <h1 id="messageM">
+                                    <%= message %>
+                                    <button id="closeMessage" class="close-button">&times;</button>
+                                </h1>
+                            </div>
                         <% } %>
             </div>
 
@@ -144,5 +149,40 @@
     </div>
 </body>
 <script src="js/javascript.js"></script>
+<script>
+       document.addEventListener("DOMContentLoaded", () => {
+        const messageElement = document.getElementById('messageM');
+        const closeButton = document.getElementById('closeMessage');
+        
+        // If there's a message, set a timeout to hide it
+        if (messageElement) {
+            // Hide message automatically after 5 seconds
+            setTimeout(() => {
+                messageElement.parentElement.style.display = 'none';
+            }, 5000); // Adjust timeout as needed
+            
+            // Add event listener to the close button
+            if (closeButton) {
+                closeButton.addEventListener('click', () => {
+                    messageElement.parentElement.style.display = 'none';
+                });
+            }
+        }
+    });
+   
+const menuBtn = document.querySelector('menu-btn');
+    const sideMenu = document.querySelector('aside');
+    const closebtn = document.querySelector(".close");
+    menuBtn.addEventListener('click', () => {
+     console.log("menu btn pressed");
+     sideMenu.style.display = 'block';
+    
+    });
+    
+    
+    
+    closebtn.addEventListener('click', ()=>{
+    sideMenu.style.display ='none';
+    })</script>
 
 </html>
