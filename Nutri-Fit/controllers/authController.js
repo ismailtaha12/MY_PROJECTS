@@ -58,16 +58,27 @@ exports.login = async (req, res) => {
         
         
         
-        //const isMatch = await bcrypt.compare(password, user.password);
-        // console.log('Password match result:', isMatch);
-        //if (!isMatch) {
-        //    console.log("in backend password bycrpt");
-        //    return res.status(400).json({ success: false, message: 'Invalid username or password' });
-        //}
-
-        res.status(200).json({ success: true, message: 'Logged in successfully', user: user });
+        const isMatch = await bcrypt.compare(password, user.password);
+         console.log('Password match result:', isMatch);
+        if (!isMatch) {
+            console.log("in backend password bycrpt");
+            return res.status(400).json({ success: false, message: 'Invalid username or password' });
+        }
+        req.session.user = { id: user._id, username: user.username, role: user.role };
+        res.status(200).json({ success: true, message: 'Logged in successfully', user: req.session.user });
     } catch (err) {
         console.error('Error logging in:', err);
         res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
+};
+
+
+exports.Logout =  (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'Failed to log out' });
+        }
+        res.clearCookie('connect.sid'); // Clear the session cookie
+        return res.status(200).json({ success: true, message: 'Logged out successfully' });
+    });
 };

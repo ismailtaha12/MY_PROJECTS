@@ -18,8 +18,25 @@ function setActive(element) {
 function confirmSignOut(){
 
 
-
-    window.open('/signin-signup.ejs', '_self');
+    fetch('/admin/signout')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // Attempt to parse JSON
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Logged out successfully');
+            window.open('/signin-signup.ejs', '_self');
+        } else {
+            console.error('Logout failed:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        console.log("im in catch");
+    });
 
 }
 
@@ -510,7 +527,7 @@ function signup() {
         return;
     }
 
-    fetch('/AddUsers', { 
+    fetch('/signup', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -893,13 +910,13 @@ const container = document.getElementById('Log-SignContainer');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
 
-//registerBtn.addEventListener('click', () => {
- //   container.classList.add("active");
-//});
+registerBtn.addEventListener('click', () => {
+    container.classList.add("active");
+});
 
-//loginBtn.addEventListener('click', () => {
- //   container.classList.remove("active");
-//});
+loginBtn.addEventListener('click', () => {
+   container.classList.remove("active");
+});
 
 
 
