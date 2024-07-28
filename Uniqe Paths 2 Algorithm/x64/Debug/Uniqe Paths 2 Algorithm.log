@@ -1,0 +1,6 @@
+﻿  Uniqe Paths 2 Algorithm.cpp
+C:\Users\MM\Downloads\Data Structure Prep\Uniqe Paths 2 Algorithm\Uniqe Paths 2 Algorithm.cpp(6,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MM\Downloads\Data Structure Prep\Uniqe Paths 2 Algorithm\Uniqe Paths 2 Algorithm.cpp(7,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MM\Downloads\Data Structure Prep\Uniqe Paths 2 Algorithm\Uniqe Paths 2 Algorithm.cpp(89,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MM\Downloads\Data Structure Prep\Uniqe Paths 2 Algorithm\Uniqe Paths 2 Algorithm.cpp(90,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Uniqe Paths 2 Algorithm.vcxproj -> C:\Users\MM\Downloads\Data Structure Prep\Uniqe Paths 2 Algorithm\x64\Debug\Uniqe Paths 2 Algorithm.exe

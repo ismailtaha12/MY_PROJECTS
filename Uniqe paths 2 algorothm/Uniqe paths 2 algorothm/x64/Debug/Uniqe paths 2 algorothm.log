@@ -1,6 +1,0 @@
-﻿  Uniqe paths 2 algorothm.cpp
-C:\Users\MM\Downloads\c++ miu\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm.cpp(6,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\MM\Downloads\c++ miu\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm.cpp(7,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\MM\Downloads\c++ miu\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm.cpp(89,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\MM\Downloads\c++ miu\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm\Uniqe paths 2 algorothm.cpp(90,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Uniqe paths 2 algorothm.vcxproj -> C:\Users\MM\Downloads\c++ miu\Uniqe paths 2 algorothm\x64\Debug\Uniqe paths 2 algorothm.exe
