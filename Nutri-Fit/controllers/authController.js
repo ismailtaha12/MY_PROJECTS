@@ -1,7 +1,10 @@
 // controllers/authController.js
 
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/users');
+const generateJWT = require('../utils/generateJWT');
+require('dotenv').config();
 
 exports.renderSigninSignup = (req, res) => {
     res.render("signin-signup");
@@ -32,6 +35,14 @@ exports.renderSigninSignup = (req, res) => {
 
         // Create a new user instance
         const user = new User({ username, password: hashedPassword, email });
+
+        //generate JWtoken
+        const token = await generateJWT({email: user.email , id: user._id , role: user.role})  
+
+        user.token = token
+
+        console.log('token:', token);
+        res.cookie('jwtToken', token, { httpOnly: true, secure: true });
         await user.save();
 
         res.status(201).json({ success: true, message: 'User created successfully' });
@@ -55,17 +66,20 @@ exports.login = async (req, res) => {
             console.log('im in existing not user');
             return res.status(400).json({ success: false, message: 'Invalid username or password' });
         }
-        
-        
-        
+
         const isMatch = await bcrypt.compare(password, user.password);
-         console.log('Password match result:', isMatch);
+        console.log('Password match result:', isMatch);
         if (!isMatch) {
             console.log("in backend password bycrpt");
             return res.status(400).json({ success: false, message: 'Invalid username or password' });
         }
-        req.session.user = { id: user._id, username: user.username, role: user.role };
-        res.status(200).json({ success: true, message: 'Logged in successfully', user: req.session.user });
+        //req.session.user = { id: user._id, username: user.username, role: user.role };
+        const token = await generateJWT({email: user.email , id: user._id , role: user.role}) 
+        console.log('token:', token);
+        
+        res.cookie('jwtToken', token, { httpOnly: true, secure: true });
+
+        res.status(200).json({ success: true, message: 'Logged in successfully', data: {token}, user });
     } catch (err) {
         console.error('Error logging in:', err);
         res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -73,12 +87,18 @@ exports.login = async (req, res) => {
 };
 
 
-exports.Logout =  (req, res) => {
+exports.Logout = (req, res) => {
     req.session.destroy(err => {
         if (err) {
             return res.status(500).json({ success: false, message: 'Failed to log out' });
         }
-        res.clearCookie('connect.sid'); // Clear the session cookie
+
+        
+        res.clearCookie('connect.sid');
+
+        
+        res.clearCookie('jwtToken'); 
+
         return res.status(200).json({ success: true, message: 'Logged out successfully' });
     });
 };

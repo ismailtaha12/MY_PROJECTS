@@ -178,17 +178,17 @@ exports.renderUser = async (req, res) => {
 
   exports.editUser = async (req, res) => {
     const userId = parseInt(req.body.UserIdedit, 10) - 1;
-    const {  password, email, role } = req.body;
+    const {    role } = req.body;
 
-console.log(req.body);
-    console.log(userId,password,role,email,"backend");
+    console.log(req.body);
+    console.log(userId,role,"backend");
     try {
 
 
       const UsersArray = await User.find({});
       
 
-        if (!userId || !password || !email || !role) {
+        if (!userId  ||  !role) {
             console.error('Invalid input data for editing user');
             req.session.message = 'Invalid input data for editing user';
             req.session.success = false;
@@ -197,7 +197,7 @@ console.log(req.body);
 
           const exactuserId = UsersArray[userId]._id;
         
-          await User.updateOne({ _id: exactuserId }, { password: password ,email: email,role: role });
+          await User.updateOne({ _id: exactuserId }, {  role: role });
           console.log(`User edited successfully ${exactuserId}`);
   
           req.session.message = "User edited successfully";

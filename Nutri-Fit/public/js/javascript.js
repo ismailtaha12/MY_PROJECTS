@@ -346,8 +346,8 @@ console.log("ljl");
 }
 
 function isEmailValid(email) {
-    const pattern = /^[a-z0-9]+(?!.*(?:\+{2,}|\-{2,}|\.{2,}))(?:[\.+\-]{0,1}[a-z0-9])*@gmail\.com$/;
-    return pattern.test(email);
+const pattern = /^[a-zA-Z0-9]+(?!.*(?:\+{2,}|\-{2,}|\.{2,}))(?:[\.+\-]{0,1}[a-zA-Z0-9])*@gmail\.com$/;  
+  return pattern.test(email);
     
 }  
 function isValidDurationonly(duration) {
@@ -448,15 +448,25 @@ function login(event) {
     .then(data => {
         if (data.success) {
             // Assuming the response contains user data
-            const user = data.user;
-            console.log(user);
-            if (user.role === "Admin") {
-                openHTMLFileAdmin(); // Define this function to handle admin redirection
-            } else if (user.role === "Client") {
-                openHTMLFileclient()// Define this function to handle client redirection
+            //const user = req.user;
+            const token = data.data.token;
+            console.log(data.user);
+            console.log('front token', token);
+            if (data.user.role === "Admin") {
+                
+                openHTMLFileAdmin(); 
+                
+                // Define this function to handle admin redirection
+            } else if (data.user.role === "Client") {
+                openHTMLFileclient()
+                
+
+                // Define this function to handle client redirection
             }
         } else {
+            
             console.log(data);
+            console.log(data.user);
             document.getElementById('loginError').textContent = data.message || 'Login failed';
             document.getElementById('loginError').classList.remove('hidden');
             document.getElementById('loginUsername').classList.add('error-input');
@@ -539,8 +549,7 @@ function signup() {
             throw new Error('Network response was not ok');
         }
         console.log('User added successfully');
-        // Optionally handle success message display or UI updates
-        // Redirect after successful addition
+        
         window.location.href = "/homepage.html";
     })
     .catch(error => {
@@ -628,32 +637,25 @@ function editData(event) {
 
   event.preventDefault();
     let editUserId = parseInt(document.getElementById('UserIdedit').value);
-    const newPassword = document.getElementById('newPasswordedit').value;
+    
     const newRole = document.getElementById('newRoleedit').value;
-    let newEmail = document.getElementById('newEmailedit').value;
 
     document.getElementById('EditErrorId').classList.add('hidden');
-    document.getElementById('EditErrorPassword').classList.add('hidden');
+    
 
     document.getElementById('EditErrorRole').classList.add('hidden');
 
    
 
-    if (editUserId === "" || newPassword === "" || newRole === "" || newEmail === "") {
+    if (editUserId === ""  || newRole === "" ) {
         document.getElementById('EditErrorRole').textContent = 'fill User Data';
         document.getElementById('EditErrorRole').classList.remove('hidden');
-        console.log(editUserId,newEmail,"Frontend");
+        console.log(editUserId,"Frontend");
         return;
     }
     
-    if(!isPasswordSafe(newPassword)){
-        document.getElementById('EditErrorPassword').classList.remove('hidden');
-        return;
-    }
-    if(!isEmailValid(newEmail)){
-        document.getElementById('newEmailedit').classList.remove('hidden');
-        return;
-    }
+    
+    
     if (newRole !== "Admin" && newRole !== "Client") {
         document.getElementById('EditErrorRole').textContent = 'Please enter Admin or Client'
         document.getElementById('EditErrorRole').classList.remove('hidden');
@@ -661,7 +663,7 @@ function editData(event) {
     }
 
     console.log("hello");
-console.log(editUserId,newEmail,"Frontend");
+console.log(editUserId,"Frontend");
 
 
     fetch(`/admin/EditUsers?_method=PUT`, {
@@ -669,7 +671,7 @@ console.log(editUserId,newEmail,"Frontend");
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ UserIdedit : editUserId, password: newPassword, email: newEmail, role: newRole })
+        body: JSON.stringify({ UserIdedit : editUserId,  role: newRole })
     })
     .then(response => {
         if (!response.ok) {

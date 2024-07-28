@@ -15,7 +15,7 @@ const cors = require('cors');
 const MainorderRoutes = require("./routes/Orders");
 const PaymentRoutes = require("./routes/Payment")
 const NutritionRoutes = require("./routes/nutrition")
-
+const cookieParser = require('cookie-parser');
 
 
 app.use(cors());
@@ -25,6 +25,7 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(cookieParser());
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 

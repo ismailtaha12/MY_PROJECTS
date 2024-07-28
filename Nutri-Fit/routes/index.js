@@ -7,10 +7,10 @@ router.get("/", (req, res) => {
   res.render("signin-signup");
 });
 
-router.get("/homepage.html", (req, res) => {
+router.get("/homepage.html",midlewares.verifyToken, (req, res) => {
   res.render("homepage");
 });
 
-router.get("/index.html",midlewares.authPage(['Admin']), orderController.getIndex);
+router.get("/index.html",midlewares.verifyToken,midlewares.authPage(['Admin']), orderController.getIndex);
 
 module.exports = router;

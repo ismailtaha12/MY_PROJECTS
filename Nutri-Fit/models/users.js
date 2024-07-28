@@ -22,6 +22,11 @@ const userSchema = new Schema({
     default: 'Client',
     
   },
+  token: {
+    type: String,
+    
+    
+  },
   createdAt: {
     type: Date,
     default: Date.now,

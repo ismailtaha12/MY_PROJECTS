@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
+const midlewares = require('../Middleware/middlewares')
 
 router.get("/signin-signup.ejs", authController.renderSigninSignup);
 
